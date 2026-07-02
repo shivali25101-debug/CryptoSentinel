@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar/Sidebar";
 
-// Pages
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Overview from "./pages/Overview/Overview";
 import Scenarios from "./pages/Scenarios/Scenarios";
@@ -20,11 +19,14 @@ import About from "./pages/About/About";
 
 function App() {
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <div className="flex h-screen bg-[#0B1220] text-white">
+
       <Sidebar />
 
-      <div style={{ flex: 1, padding: "20px" }}>
+      <main className="flex-1 overflow-y-auto p-8">
+
         <Routes>
+
           <Route path="/" element={<Dashboard />} />
           <Route path="/overview" element={<Overview />} />
           <Route path="/scenarios" element={<Scenarios />} />
@@ -39,8 +41,11 @@ function App() {
           <Route path="/system-health" element={<SystemHealth />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/about" element={<About />} />
+
         </Routes>
-      </div>
+
+      </main>
+
     </div>
   );
 }
