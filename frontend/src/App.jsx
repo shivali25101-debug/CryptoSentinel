@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import Sidebar from "./components/Sidebar/Sidebar";
+import MainLayout from "./layouts/MainLayout";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Overview from "./pages/Overview/Overview";
@@ -19,34 +19,28 @@ import About from "./pages/About/About";
 
 function App() {
   return (
-    <div className="flex h-screen bg-[#0B1220] text-white">
+    <MainLayout>
 
-      <Sidebar />
+      <Routes>
 
-      <main className="flex-1 overflow-y-auto p-8">
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/overview" element={<Overview />} />
+        <Route path="/scenarios" element={<Scenarios />} />
+        <Route path="/visualization" element={<Visualization />} />
+        <Route path="/network-topology" element={<NetworkTopology />} />
+        <Route path="/packet-monitor" element={<PacketMonitor />} />
+        <Route path="/logs" element={<Logs />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/vm1" element={<VM1 />} />
+        <Route path="/vm2" element={<VM2 />} />
+        <Route path="/vm3" element={<VM3 />} />
+        <Route path="/system-health" element={<SystemHealth />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/about" element={<About />} />
 
-        <Routes>
+      </Routes>
 
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/overview" element={<Overview />} />
-          <Route path="/scenarios" element={<Scenarios />} />
-          <Route path="/visualization" element={<Visualization />} />
-          <Route path="/network-topology" element={<NetworkTopology />} />
-          <Route path="/packet-monitor" element={<PacketMonitor />} />
-          <Route path="/logs" element={<Logs />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/vm1" element={<VM1 />} />
-          <Route path="/vm2" element={<VM2 />} />
-          <Route path="/vm3" element={<VM3 />} />
-          <Route path="/system-health" element={<SystemHealth />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/about" element={<About />} />
-
-        </Routes>
-
-      </main>
-
-    </div>
+    </MainLayout>
   );
 }
 

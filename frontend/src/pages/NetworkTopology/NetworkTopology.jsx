@@ -3,7 +3,7 @@ import TopologyCanvas from "../../components/NetworkTopology/TopologyCanvas";
 
 function NetworkTopology() {
   return (
-    <div className="px-8 py-8 space-y-8">
+    <div className="px-8 py-8">
 
       <CyberHeading
         title="NETWORK TOPOLOGY"

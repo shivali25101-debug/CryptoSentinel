@@ -8,14 +8,8 @@ import StatusIcon from "./StatusIcon";
 
 function TopologyCanvas() {
 
-  // Change only this variable later
-  const mode = "disconnected";
-  // vpn
-  // weak-password
-  // mitm
-  // secure-mitm
-  // shor
-  // kyber
+  // Change this later according to selected scenario
+  const mode = "mitm";
 
   const disconnected = mode === "disconnected";
 
@@ -30,59 +24,43 @@ function TopologyCanvas() {
     mode === "secure-mitm" ||
     mode === "kyber";
 
-  const title =
-    disconnected
-      ? "DISCONNECTED"
-      : vpn
-      ? "VPN CONNECTION ESTABLISHED"
-      : mode === "weak-password"
-      ? "WEAK PASSWORD ATTACK"
-      : mode === "mitm"
-      ? "MAN-IN-THE-MIDDLE ATTACK"
-      : mode === "secure-mitm"
-      ? "SECURE MITM PROTECTION"
-      : mode === "shor"
-      ? "SHOR'S ALGORITHM"
-      : "KYBER POST-QUANTUM ENCRYPTION";
-
   return (
 
-    <div className="relative w-full h-full overflow-hidden rounded-xl bg-[#050B14]">
+    <div
+      className="
+      relative
+      mt-8
+      h-[760px]
+      w-full
+      rounded-xl
+      overflow-hidden
+      border
+      border-white/10
+      bg-[#050B14]
+      "
+    >
 
       <BackgroundGrid />
 
-      {/* Title */}
-
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center">
-
-        <h1 className="text-5xl font-light tracking-[0.35em] text-[#6BFF86]">
-
-          NETWORK TOPOLOGY
-
-        </h1>
-
-        <div className="mx-auto mt-5 w-[420px] h-px bg-[#21422e]" />
-
-        <p className="mt-6 text-xl tracking-[0.32em] text-[#7ee58e]">
-
-          {title}
-
-        </p>
-
-      </div>
-
       {/* Sender */}
 
-      <div className="absolute left-20 top-48">
+      <div
+        className="
+        absolute
+        left-[6%]
+        top-[-5%]
+        "
+      >
 
         <img
           src={sender}
           alt="Sender"
           className="
-          w-[360px]
+          w-[300px]
+          object-contain
           select-none
           pointer-events-none
-          drop-shadow-[0_0_18px_#00ff66]
+          drop-shadow-[0_0_30px_rgba(0,255,120,0.35)]
           "
         />
 
@@ -90,16 +68,23 @@ function TopologyCanvas() {
 
       {/* Receiver */}
 
-      <div className="absolute right-20 top-48">
+      <div
+        className="
+        absolute
+        right-[6%]
+        top-[-7%]
+        "
+      >
 
         <img
           src={receiver}
           alt="Receiver"
           className="
-          w-[360px]
+          w-[300px]
+          object-contain
           select-none
           pointer-events-none
-          drop-shadow-[0_0_18px_#00ff66]
+          drop-shadow-[0_0_30px_rgba(0,255,120,0.35)]
           "
         />
 
@@ -111,93 +96,65 @@ function TopologyCanvas() {
         className={`
         absolute
         left-1/2
-        bottom-12
+        bottom-10
         -translate-x-1/2
         transition-all
         duration-500
 
         ${
           disconnected || vpn
-            ? "opacity-20"
+            ? "opacity-50"
             : "opacity-100"
         }
-      `}
+        `}
       >
 
         <img
           src={attacker}
           alt="Attacker"
           className="
-          w-[390px]
+          w-[300px]
+          object-contain
           select-none
           pointer-events-none
-          drop-shadow-[0_0_22px_red]
+          drop-shadow-[0_0_40px_rgba(255,0,0,.35)]
           "
         />
 
       </div>
-
-      {/* Main Connection */}
+            {/* ================= CONNECTIONS ================= */}
 
       {(vpn || attackSuccess || attackFailed) && (
 
         <ConnectionLine
-
-          x1={360}
-          y1={345}
-
-          x2={1080}
-          y2={345}
-
+          x1={350}
+          y1={150}
+          x2={590}
+          y2={150}
           color="#3CFF7B"
-
         />
 
       )}
 
-      {/* Attack Lines */}
+      {/* ================= ATTACK PATH ================= */}
 
       {(attackSuccess || attackFailed) && (
 
         <>
 
           <ConnectionLine
-
-            x1={640}
-            y1={590}
-
-            x2={520}
-            y2={365}
-
-            color="#ff3434"
-
-          />
-
-          <ConnectionLine
-
-            x1={760}
-            y1={590}
-
-            x2={920}
-            y2={365}
-
-            color="#ff3434"
-
+            x1={465}
+            y1={380}
+            x2={465}
+            y2={160}
+            color="#FF3232"
           />
 
         </>
 
       )}
 
-      {/* Success */}
-
-      {attackFailed && (
-
-        <StatusIcon success />
-
-      )}
-
-      {/* Failed */}
+      {/* ================= BREACH ================= */}
 
       {attackSuccess && (
 
@@ -205,29 +162,85 @@ function TopologyCanvas() {
 
           <StatusIcon success={false} />
 
-          {/* Break the green line after the cross */}
+          {/* Hide receiver half of green connection */}
 
-          <div
-
-            className="
-            absolute
-            top-[342px]
-            left-[760px]
-            w-[360px]
-            h-[8px]
-            bg-[#050B14]
-            "
-
+         <ConnectionLine
+            x1={490}
+            y1={150}
+            x2={590}
+            y2={150}
+            color="#FF3232"
           />
 
         </>
 
       )}
 
-    </div>
+      {/* ================= SECURE ================= */}
+
+      {attackFailed && (
+
+        <StatusIcon success />
+
+      )}
+            {/* ================= LABELS ================= */}
+
+      <div
+        className="
+        absolute
+        left-[150px]
+        top-[280px]
+        text-center
+        "
+      >
+
+        <h2 className="text-green-400 tracking-[0.25em] text-lg font-light">
+          SENDER
+        </h2>
+
+      </div>
+
+      <div
+        className="
+        absolute
+        right-[150px]
+        top-[280px]
+        text-center
+        "
+      >
+
+        <h2 className="text-green-400 tracking-[0.25em] text-lg font-light">
+          RECEIVER
+        </h2>
+
+      </div>
+
+      <div
+        className={`
+        absolute
+        left-1/2
+        bottom-30
+        -translate-x-1/2
+        text-center
+        transition-all
+
+        ${
+          disconnected || vpn
+            ? "opacity-50"
+            : "opacity-100"
+        }
+        `}
+      >
+
+        <h2 className="text-red-500 tracking-[0.25em] text-lg font-light">
+          ATTACKER
+        </h2>
+
+      </div>
+          </div>
 
   );
 
 }
 
-export default TopologyCanvas;
+export default TopologyCanvas; 
