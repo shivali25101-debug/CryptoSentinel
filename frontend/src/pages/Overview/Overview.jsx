@@ -70,7 +70,7 @@ function Overview() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#05070F] text-gray-300 px-6 py-8 font-mono">
+    <div className="min-h-screen bg-[#05070F] text-gray-300 px-6 py-0 font-mono">
 
       {/* HEADER */}
       <div className="text-center mb-10">

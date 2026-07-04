@@ -1,0 +1,253 @@
+/* ===========================
+   BACKGROUND GRID
+=========================== */
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+
+  background-size: 40px 40px;
+
+  animation: gridMove 18s linear infinite;
+}
+
+@keyframes gridMove {
+
+  from {
+    transform: translate(0,0);
+  }
+
+  to {
+    transform: translate(40px,40px);
+  }
+
+}
+
+/* ===========================
+   LIVE DOT
+=========================== */
+
+.live-dot{
+
+  width:8px;
+  height:8px;
+
+  border-radius:9999px;
+
+  background:#22c55e;
+
+  box-shadow:
+  0 0 10px #22c55e,
+  0 0 20px #22c55e;
+
+  animation:pulse 1.5s infinite;
+
+}
+
+@keyframes pulse{
+
+  0%{
+
+    transform:scale(.8);
+
+    opacity:.5;
+
+  }
+
+  50%{
+
+    transform:scale(1.2);
+
+    opacity:1;
+
+  }
+
+  100%{
+
+    transform:scale(.8);
+
+    opacity:.5;
+
+  }
+
+}
+
+/* ===========================
+   NODE GLOW
+=========================== */
+
+.node-glow{
+
+  width:180px;
+  height:180px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  border-radius:50%;
+
+}
+
+.sender-glow{
+
+  box-shadow:
+
+  0 0 15px rgba(34,211,238,.4),
+
+  0 0 40px rgba(34,211,238,.15);
+
+}
+
+.receiver-glow{
+
+  box-shadow:
+
+  0 0 15px rgba(34,197,94,.4),
+
+  0 0 40px rgba(34,197,94,.15);
+
+}
+
+.attacker-glow{
+
+  box-shadow:
+
+  0 0 15px rgba(239,68,68,.45),
+
+  0 0 40px rgba(239,68,68,.18);
+
+  animation:redPulse 2s infinite;
+
+}
+
+@keyframes redPulse{
+
+  50%{
+
+    box-shadow:
+
+    0 0 30px rgba(239,68,68,.9),
+
+    0 0 60px rgba(239,68,68,.35);
+
+  }
+
+}
+
+/* ===========================
+   PACKETS
+=========================== */
+
+.packet{
+
+  position:absolute;
+
+  width:10px;
+
+  height:10px;
+
+  border-radius:3px;
+
+  background:#22D3EE;
+
+  box-shadow:
+
+  0 0 10px #22D3EE,
+
+  0 0 20px #22D3EE;
+
+  top:100px;
+
+}
+
+.packet1{
+
+  left:170px;
+
+  animation:move1 2.5s linear infinite;
+
+}
+
+.packet2{
+
+  left:170px;
+
+  animation:move1 2.5s linear infinite 1.2s;
+
+}
+
+.packet3{
+
+  left:640px;
+
+  animation:move2 2.5s linear infinite 1.2s;
+
+}
+
+.packet4{
+
+  left:640px;
+
+  animation:move2 2.5s linear infinite 1.2s;
+
+}
+.packet5{
+
+  left:170px;
+
+  animation:move1 2.5s linear infinite;
+
+}
+.packet6{
+
+  left:170px;
+
+  animation:move1 2.5s linear infinite;
+
+}
+
+@keyframes move1{
+
+  from{
+
+    transform:translateX(0);
+
+  }
+
+  to{
+
+    transform:translateX(300px);
+
+  }
+
+}
+
+@keyframes move2{
+
+  from{
+
+    transform:translateX(0);
+
+  }
+
+  to{
+
+    transform:translateX(300px);
+
+  }
+
+}
+
+/* ===========================
+   SVG GLOW
+=========================== */
+
+svg path{
+
+  filter:drop-shadow(0 0 6px rgba(34,211,238,.25));
+
+}
