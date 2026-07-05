@@ -1,39 +1,12 @@
+import useCyberData from "../../../hooks/useCyberData";
 import { Trash2 } from "lucide-react";
-
-const alerts = [
-  {
-    time: "20:47:58",
-    level: "WARN",
-    message: "ARP spoofing attempt detected",
-  },
-  {
-    time: "20:46:41",
-    level: "INFO",
-    message: "VPN tunnel established",
-  },
-  {
-    time: "20:46:10",
-    level: "INFO",
-    message: "Key exchange completed",
-  },
-  {
-    time: "20:45:51",
-    level: "INFO",
-    message: "Client authenticated",
-  },
-  {
-    time: "20:45:12",
-    level: "INFO",
-    message: "System initialized",
-  },
-];
 
 function levelColor(level) {
   switch (level) {
-    case "WARN":
+    case "warning":
       return "text-yellow-400";
 
-    case "ERROR":
+    case "critical":
       return "text-red-400";
 
     default:
@@ -42,6 +15,7 @@ function levelColor(level) {
 }
 
 function Alerts() {
+    const { alerts = [] } = useCyberData();
   return (
     <div className="h-full rounded-xl border border-[#1A2430] bg-[#08111D] overflow-hidden">
 
@@ -87,8 +61,8 @@ function Alerts() {
                 {alert.time}
               </span>
 
-              <span className={levelColor(alert.level)}>
-                [{alert.level}]
+              <span className={levelColor(alert.severity)}>
+                [{alert.severity.toUpperCase()}]
               </span>
 
             </div>

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import useCyberData from "../../../hooks/useCyberData";
 import {
   LineChart,
   Line,
@@ -8,16 +10,7 @@ import {
   Tooltip,
 } from "recharts";
 
-const data = [
-  { time: "20:45:30", sent: 280, received: 520, intercepted: 90 },
-  { time: "20:46:00", sent: 260, received: 610, intercepted: 110 },
-  { time: "20:46:30", sent: 330, received: 700, intercepted: 105 },
-  { time: "20:47:00", sent: 360, received: 640, intercepted: 120 },
-  { time: "20:47:30", sent: 340, received: 760, intercepted: 118 },
-  { time: "20:48:00", sent: 395, received: 720, intercepted: 130 },
-  { time: "20:48:30", sent: 380, received: 790, intercepted: 115 },
-  { time: "20:49:00", sent: 420, received: 730, intercepted: 125 },
-];
+
 
 function CustomTooltip({ active, payload }) {
   if (!active || !payload) return null;
@@ -42,6 +35,46 @@ function CustomTooltip({ active, payload }) {
 }
 
 function RealTimeTraffic() {
+    
+    const {
+  sentPackets,
+  receivedPackets,
+  interceptedPackets,
+} = useCyberData();
+
+const [chartData, setChartData] = useState([]);
+console.log({
+  sentPackets,
+  receivedPackets,
+  interceptedPackets,
+});
+
+useEffect(() => {
+  const now = new Date();
+
+  const time =
+    now.getHours().toString().padStart(2, "0") +
+    ":" +
+    now.getMinutes().toString().padStart(2, "0") +
+    ":" +
+    now.getSeconds().toString().padStart(2, "0");
+
+  setChartData((prev) => {
+    const updated = [
+      ...prev,
+      {
+        time,
+        sent: sentPackets,
+        received: receivedPackets,
+        intercepted: interceptedPackets,
+      },
+    ];
+
+    return updated.slice(-20); // Keep last 20 points
+  });
+
+}, [sentPackets, receivedPackets, interceptedPackets]);
+
   return (
     <div className="h-full rounded-xl border border-[#1A2430] bg-[#08111D]">
 
@@ -96,7 +129,7 @@ function RealTimeTraffic() {
         <ResponsiveContainer>
 
           <LineChart
-            data={data}
+            data={chartData}
             margin={{
               top: 20,
               right: 15,
