@@ -17,6 +17,7 @@ export function DataProvider({ children }) {
 
     ws.onmessage = (event) => {
       const newData = JSON.parse(event.data);
+      console.log("VM3 =", newData.vm3);
       setData(newData);
     };
 

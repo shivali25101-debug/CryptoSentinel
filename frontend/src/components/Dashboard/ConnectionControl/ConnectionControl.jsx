@@ -19,7 +19,7 @@ function ConnectionControl() {
       <div className="flex flex-col h-[calc(100%-60px)]">
 
         <div className="flex-1 flex items-center justify-center">
-          <TopologyCanvas scenario={scenario} />
+          <TopologyCanvas />
         </div>
 
         <ConnectionStatus scenario={scenario} />

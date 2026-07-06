@@ -1,12 +1,14 @@
 import sender from "../../../assets/topology/sender.png";
 import receiver from "../../../assets/topology/receiver.png";
 import attacker from "../../../assets/topology/attacker.png";
+import useCyberData from "../../../hooks/useCyberData";
 
-function TopologyCanvas({ scenario }) {
+function TopologyCanvas() {
+  const { scenario } = useCyberData();
 
-  const isNormal = scenario === "normal";
-  const isAttack = scenario === "attack";
-  const isSecure = scenario === "secure";
+  const isNormal = scenario === "Normal";
+  const isAttack = scenario === "MITM";
+  const isSecure = scenario === "Secure";
 
   return (
     <div className="relative w-full h-[420px]">

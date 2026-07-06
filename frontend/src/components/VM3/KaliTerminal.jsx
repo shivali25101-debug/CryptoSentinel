@@ -1,20 +1,42 @@
-const lines = [
-  "root@kali:~# python3 mitm.py",
-  "",
-  "[INFO] Initializing attack...",
-  "[INFO] Enabling IP forwarding...",
-  "[SUCCESS] IP forwarding enabled.",
-  "[INFO] Starting ARP spoofing...",
-  "[SUCCESS] Victim ARP cache poisoned.",
-  "[CAPTURE] Packet #231 intercepted",
-  "[CAPTURE] Packet #232 intercepted",
-  "[FORWARD] Forwarding packet to VM2",
-  "[INFO] Monitoring traffic...",
-  "",
-  "root@kali:~# █",
-];
+import { useEffect, useRef } from "react";
+import { useData } from "../../context/DataContext";
 
 function KaliTerminal() {
+  const { data } = useData();
+
+  const lines =
+    data?.vm3?.terminal || [];
+
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [lines]);
+
+  const getColor = (line) => {
+    if (line.includes("[SUCCESS]"))
+      return "text-green-400";
+
+    if (line.includes("[ERROR]"))
+      return "text-red-400";
+
+    if (line.includes("[WARNING]"))
+      return "text-orange-400";
+
+    if (line.includes("[INFO]"))
+      return "text-cyan-400";
+
+    if (line.includes("[CAPTURE]"))
+      return "text-red-400";
+
+    if (line.includes("[FORWARD]"))
+      return "text-yellow-400";
+
+    return "text-green-300";
+  };
+
   return (
     <div className="bg-[#0F172A] border border-red-900 rounded-xl overflow-hidden">
 
@@ -31,28 +53,21 @@ function KaliTerminal() {
         </span>
 
         <div />
+
       </div>
 
-      <div className="bg-black h-[420px] p-6 font-mono text-sm overflow-y-auto leading-7">
+      <div className="bg-black h-[420px] overflow-y-auto p-6 font-mono text-sm leading-7">
 
         {lines.map((line, index) => (
           <p
             key={index}
-            className={
-              line.includes("[SUCCESS]")
-                ? "text-green-400"
-                : line.includes("[INFO]")
-                ? "text-cyan-400"
-                : line.includes("[CAPTURE]")
-                ? "text-red-400"
-                : line.includes("[FORWARD]")
-                ? "text-yellow-400"
-                : "text-green-300"
-            }
+            className={getColor(line)}
           >
             {line}
           </p>
         ))}
+
+        <div ref={bottomRef} />
 
       </div>
 

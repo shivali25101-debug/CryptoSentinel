@@ -251,3 +251,24 @@ svg path{
   filter:drop-shadow(0 0 6px rgba(34,211,238,.25));
 
 }
+/* Packet Colours */
+
+.packet-blue{
+
+  background:#22D3EE;
+
+  box-shadow:
+    0 0 10px #22D3EE,
+    0 0 20px #22D3EE;
+
+}
+
+.packet-red{
+
+  background:#EF4444;
+
+  box-shadow:
+    0 0 10px #EF4444,
+    0 0 20px #EF4444;
+
+}

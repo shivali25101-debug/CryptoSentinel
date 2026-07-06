@@ -30,5 +30,14 @@ export default function useCyberData() {
     senderConnected: data?.senderConnected ?? false,
     receiverConnected: data?.receiverConnected ?? false,
     attackerConnected: data?.attackerConnected ?? false,
+
+    simulation: data?.simulation ?? {},
+
+    packet: data?.simulation?.packet ?? {
+      id: 0,
+      position: "vm1",
+      status: "idle",
+      color: "cyan",
+    },
   };
 }

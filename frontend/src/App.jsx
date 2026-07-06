@@ -17,14 +17,45 @@ import SystemHealth from "./pages/SystemHealth/SystemHealth";
 import Settings from "./pages/Settings/Settings";
 import About from "./pages/About/About";
 
+import NormalVPN from "./pages/Overview/NormalVPN";
+import WeakPassword from "./pages/Overview/WeakPassword";
+import MitmUnauthorized from "./pages/Overview/MitmUnauthorized";
+import MitmAuthorised from "./pages/Overview/MitmAuthorised";
+import ShorsAlgorithm from "./pages/Overview/ShorsAlgorithm";
+import Kyber from "./pages/Overview/Kyber";
+
 function App() {
   return (
     <MainLayout>
-
       <Routes>
-
+        {/* Dashboard */}
         <Route path="/" element={<Dashboard />} />
+
+        {/* Overview */}
         <Route path="/overview" element={<Overview />} />
+        <Route path="/overview/normal" element={<NormalVPN />} />
+        <Route
+          path="/overview/weak-password"
+          element={<WeakPassword />}
+        />
+        <Route
+          path="/overview/mitm"
+          element={<MitmUnauthorized />}
+        />
+        <Route
+          path="/overview/secure-mitm"
+          element={<MitmAuthorised />}
+        />
+        <Route
+          path="/overview/shor"
+          element={<ShorsAlgorithm />}
+        />
+        <Route
+          path="/overview/kyber"
+          element={<Kyber />}
+        />
+
+        {/* Other Pages */}
         <Route path="/scenarios" element={<Scenarios />} />
         <Route path="/visualization" element={<Visualization />} />
         <Route path="/network-topology" element={<NetworkTopology />} />
@@ -37,9 +68,7 @@ function App() {
         <Route path="/system-health" element={<SystemHealth />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<About />} />
-
       </Routes>
-
     </MainLayout>
   );
 }
