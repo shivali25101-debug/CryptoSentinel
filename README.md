@@ -185,7 +185,8 @@ The following screenshots provide a guided tour of CryptoSentinel. Each page is 
 # 🏠 Dashboard
 
 <p align="center">
-<img src="screenshots/Dashboard.png" width="90%">
+<img src="Dashboard1.png" width="90%">
+<img src="Dashboard2.png" width="90%">  
 </p>
 
 The Dashboard acts as the command center of CryptoSentinel, providing a live overview of network activity and system status.
@@ -204,7 +205,7 @@ The Dashboard acts as the command center of CryptoSentinel, providing a live ove
 # ⚔ Attack Scenarios
 
 <p align="center">
-<img src="screenshots/Scenarios.png" width="90%">
+<img src="Scenarios.png" width="90%">
 </p>
 
 Select from six cybersecurity scenarios. Choosing any scenario immediately updates the backend state and synchronizes all application pages in real time.
@@ -223,7 +224,7 @@ Select from six cybersecurity scenarios. Choosing any scenario immediately updat
 # 🔐 Normal VPN 
 
 <p align="center">
-<img src="screenshots/NormalVPN.png" width="90%">
+<img src="NormalVPN.png" width="90%">
 </p>
 
 Demonstrates secure communication through an encrypted VPN tunnel using authenticated key exchange and modern encryption techniques.
@@ -240,7 +241,7 @@ Demonstrates secure communication through an encrypted VPN tunnel using authenti
 # 🔑 Weak Password Attack
 
 <p align="center">
-<img src="screenshots/WeakPassword.png" width="90%">
+<img src="WeakPassword.png" width="90%">
 </p>
 
 Illustrates how weak credentials compromise system security and why strong authentication practices are essential.
@@ -257,7 +258,7 @@ Illustrates how weak credentials compromise system security and why strong authe
 # 🚨 MITM (Unauthorized)
 
 <p align="center">
-<img src="screenshots/MitmUnauthorized.png" width="90%">
+<img src="MitmUnauthorized.png" width="90%">
 </p>
 
 Simulates a malicious Man-in-the-Middle attack where packets are intercepted using ARP spoofing before being forwarded to the destination.
@@ -274,7 +275,7 @@ Simulates a malicious Man-in-the-Middle attack where packets are intercepted usi
 # 🛡 MITM (Authorized)
 
 <p align="center">
-<img src="screenshots/MitmAuthorised.png" width="90%">
+<img src="MitmAuthorised.png" width="90%">
 </p>
 
 Represents legitimate traffic inspection performed by trusted enterprise security systems while maintaining secure communication.
@@ -291,7 +292,7 @@ Represents legitimate traffic inspection performed by trusted enterprise securit
 # ⚛ Shor's Algorithm
 
 <p align="center">
-<img src="screenshots/ShorsAlgorithm.png" width="90%">
+<img src="ShorsAlgorithm.png" width="90%">
 </p>
 
 Demonstrates the theoretical impact of quantum computing on classical public-key cryptography and future cybersecurity challenges.
@@ -308,7 +309,7 @@ Demonstrates the theoretical impact of quantum computing on classical public-key
 # 🔷 CRYSTALS-Kyber
 
 <p align="center">
-<img src="screenshots/Kyber.png" width="90%">
+<img src="Kyber.png" width="90%">
 </p>
 
 Illustrates post-quantum secure communication using the CRYSTALS-Kyber Key Encapsulation Mechanism.
@@ -325,7 +326,7 @@ Illustrates post-quantum secure communication using the CRYSTALS-Kyber Key Encap
 # 🌐 Network Topology
 
 <p align="center">
-<img src="screenshots/NetworkTopology.png" width="90%">
+<img src="NetworkTopology.png" width="90%">
 </p>
 
 Visualizes the logical network architecture consisting of the sender, receiver, attacker, and communication links.
@@ -342,7 +343,7 @@ Visualizes the logical network architecture consisting of the sender, receiver, 
 # ⚡ Network Visualization
 
 <p align="center">
-<img src="screenshots/Visualization.png" width="90%">
+<img src="Visualization.png" width="90%">
 </p>
 
 Displays animated packet movement across the network while continuously updating latency, bandwidth, attack timeline, and traffic flow.
@@ -360,7 +361,7 @@ Displays animated packet movement across the network while continuously updating
 # 💻 VM1 — Sender
 
 <p align="center">
-<img src="screenshots/Vm1.png" width="90%">
+<img src="Vm1.png" width="90%">
 </p>
 
 Represents the sender machine responsible for encrypting and transmitting packets through the VPN tunnel.
@@ -377,7 +378,7 @@ Represents the sender machine responsible for encrypting and transmitting packet
 # 📥 VM2 — Receiver
 
 <p align="center">
-<img src="screenshots/Vm2.png" width="90%">
+<img src="Vm2.png" width="90%">
 </p>
 
 Represents the receiving machine responsible for authentication, integrity verification, and decryption of incoming packets.
@@ -394,7 +395,7 @@ Represents the receiving machine responsible for authentication, integrity verif
 # 🐉 VM3 — Attacker
 
 <p align="center">
-<img src="screenshots/Vm3.png" width="90%">
+<img src="Vm3.png" width="90%">
 </p>
 
 Represents the Kali Linux attacker machine performing packet interception and attack simulation.
@@ -411,7 +412,7 @@ Represents the Kali Linux attacker machine performing packet interception and at
 # 📦 Packet Monitor
 
 <p align="center">
-<img src="screenshots/PacketMonitor.png" width="90%">
+<img src="PacketMonitor.png" width="90%">
 </p>
 
 Displays detailed information for packets travelling across the simulated network, including protocol, status, and transmission history.
@@ -428,7 +429,7 @@ Displays detailed information for packets travelling across the simulated networ
 # 📊 Reports
 
 <p align="center">
-<img src="screenshots/Reports.png" width="90%">
+<img src="Reports.png" width="90%">
 </p>
 
 Summarizes network activity and security events through generated reports for easier analysis and monitoring.
@@ -445,7 +446,7 @@ Summarizes network activity and security events through generated reports for ea
 # ❤️ System Health
 
 <p align="center">
-<img src="screenshots/SystemHealth.png" width="90%">
+<img src="SystemHealth.png" width="90%">
 </p>
 
 Continuously monitors system resources and virtual machine health during simulation.
@@ -456,26 +457,6 @@ Continuously monitors system resources and virtual machine health during simulat
 - Memory Usage
 - VPN Health
 - VM Status
-
----
-
-# ⚙ Settings
-
-<p align="center">
-<img src="screenshots/Settings.png" width="90%">
-</p>
-
-Provides application configuration options and simulation preferences for the user.
-
----
-
-# ℹ About
-
-<p align="center">
-<img src="screenshots/About.png" width="90%">
-</p>
-
-Contains information about the project, objectives, technologies used, acknowledgements, and development details.
 
 ---
 # 🏗️ System Architecture
