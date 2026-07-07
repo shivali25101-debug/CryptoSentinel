@@ -220,7 +220,7 @@ Select from six cybersecurity scenarios. Choosing any scenario immediately updat
 
 ---
 
-# 🔐 Normal VPN
+# 🔐 Normal VPN 
 
 <p align="center">
 <img src="screenshots/NormalVPN.png" width="90%">
@@ -1131,86 +1131,9 @@ Developing CryptoSentinel provided practical experience in several areas of soft
 
 ---
 
-# 🤝 Contributing
-
-Contributions are always welcome.
-
-If you would like to improve CryptoSentinel:
-
-1. Fork the repository
-2. Create a new feature branch
-
-```bash
-git checkout -b feature/YourFeature
-```
-
-3. Commit your changes
-
-```bash
-git commit -m "Add new feature"
-```
-
-4. Push your branch
-
-```bash
-git push origin feature/YourFeature
-```
-
-5. Open a Pull Request
-
----
-
 # 📝 License
 
 This project is licensed under the **MIT License**.
-
-Feel free to use, modify, and distribute this project for educational and research purposes.
-
----
-
-# 👩‍💻 Author
-
-## **Shivali Pandey**
-
-**B.Tech Electronics & Communication Engineering**  
-**IIIT Naya Raipur**
-
-### Connect with me
-
-- 💼 LinkedIn: *Add your LinkedIn profile*
-- 🐙 GitHub: *Add your GitHub profile*
-- 📧 Email: *Add your email*
-
----
-
-# 🙏 Acknowledgements
-
-Special thanks to the technologies and communities that made this project possible.
-
-- React
-- Vite
-- Tailwind CSS
-- Python
-- WebSockets
-- Lucide React
-- Framer Motion
-- Open Source Community
-
----
-
-# ⭐ Support
-
-If you found this project useful:
-
-⭐ Star the repository
-
-🍴 Fork the project
-
-🛠️ Contribute improvements
-
-📢 Share it with others
-
-Your support helps improve the project and encourages future development.
 
 ---
 
@@ -1220,10 +1143,9 @@ Your support helps improve the project and encourages future development.
 
 ### *Visualizing Secure Communication. Understanding Cybersecurity.*
 
-**Built with ❤️ using React, Python, WebSockets, and Modern Cybersecurity Concepts**
+**Built using React, Python, WebSockets, and Modern Cybersecurity Concepts**
 
 ---
 
-⭐ **If you enjoyed this project, don't forget to star the repository!** ⭐
 
 </div>
