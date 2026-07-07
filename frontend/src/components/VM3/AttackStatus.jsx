@@ -8,6 +8,7 @@ function AttackStatus({
     attack.state === "Running";
 
   return (
+    console.log("Attack Status:", attack),
 
     <div className="bg-[#0F172A] border border-red-900 rounded-xl p-6">
 

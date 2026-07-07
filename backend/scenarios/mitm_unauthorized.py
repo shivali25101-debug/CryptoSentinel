@@ -2,22 +2,27 @@ import random
 from datetime import datetime
 
 VM1_LOGS = [
-    "Encrypting packet...",
-    "Sending packet to VM2...",
+    "Interface eth0 initialized.",
+    "VPN tunnel active.",
+    "Destination gateway verified.",
+    "Encrypting outgoing packet.",
+    "Packet queued for transmission.",
 ]
 
 VM2_LOGS = [
-    "Receiving forwarded packet...",
-    "Integrity verification completed.",
-    "Decrypting packet...",
+    "Listening on VPN interface.",
+    "Incoming packet detected.",
+    "Packet integrity verified.",
+    "Decrypting payload.",
+    "Forwarding to application.",
 ]
 
 VM3_LOGS = [
     "Starting ARP spoofing...",
+    "Gateway MAC address spoofed.",
     "Victim ARP cache poisoned.",
-    "Packet intercepted.",
-    "Extracting credentials...",
-    "Forwarding packet to VM2...",
+    "Intercepting encrypted traffic.",
+    "Forwarding packets to victim.",
 ]
 
 vm1_index = 0
@@ -31,8 +36,8 @@ def append_terminal(state_manager, path, message):
 
     terminal.insert(-1, message)
 
-    if len(terminal) > 25:
-        terminal = terminal[-25:]
+    if len(terminal) > 100:
+        terminal = terminal[-100:]
 
     state_manager.update(path, terminal)
 
@@ -127,37 +132,86 @@ def update(state_manager):
     # VM1
     # =====================
 
-    append_terminal(
-        state_manager,
-        "vm1.terminal",
-        "[TX] " + VM1_LOGS[vm1_index],
-    )
+    if vm1_index < len(VM1_LOGS):
 
-    vm1_index = (vm1_index + 1) % len(VM1_LOGS)
+        append_terminal(
+            state_manager,
+            "vm1.terminal",
+            "[INIT] " + VM1_LOGS[vm1_index],
+        )
+
+        vm1_index += 1
+
+    else:
+
+        append_terminal(
+           state_manager,
+           "vm1.terminal",
+           random.choice([
+              "[TX] Encrypting packet...",
+              "[TX] Sending encrypted packet...",
+              "[VPN] Packet sent via tunnel.",
+              "[NET] Awaiting acknowledgement.",
+            ]),
+        )
+
+        vm1_index = (vm1_index + 1) % len(VM1_LOGS)
 
     # =====================
     # VM2
     # =====================
 
-    append_terminal(
+    if vm2_index < len(VM2_LOGS):
+
+      append_terminal(
         state_manager,
         "vm2.terminal",
-        "[RX] " + VM2_LOGS[vm2_index],
-    )
+        "[INIT] " + VM2_LOGS[vm2_index],
+      )
 
-    vm2_index = (vm2_index + 1) % len(VM2_LOGS)
+      vm2_index += 1
 
+    else:
+
+      append_terminal(
+        state_manager,
+        "vm2.terminal",
+        random.choice([
+            "[RX] Packet received.",
+            "[OK] Integrity check passed.",
+            "[RX] Payload decrypted.",
+            "[READY] Waiting for next packet.",
+        ]),
+      )
     # =====================
     # VM3
     # =====================
 
-    append_terminal(
+    if vm3_index < len(VM3_LOGS):
+
+      append_terminal(
         state_manager,
         "vm3.terminal",
         "[MITM] " + VM3_LOGS[vm3_index],
-    )
+      )
 
-    vm3_index = (vm3_index + 1) % len(VM3_LOGS)
+      vm3_index += 1
+
+    else:
+
+      append_terminal(
+        state_manager,
+        "vm3.terminal",
+        random.choice([
+            "[CAPTURE] Packet intercepted.",
+            "[MITM] Reading packet headers...",
+            "[FORWARD] Forwarding packet to VM2...",
+            "[CAPTURE] Session token captured.",
+            "[MITM] Monitoring victim traffic...",
+        ]),
+      )
+
+      vm3_index = (vm3_index + 1) % len(VM3_LOGS)
 
     # =====================
     # Captured Packets

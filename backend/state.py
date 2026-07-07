@@ -281,13 +281,13 @@ app_state = {
 
     "vm3": {
 
-        "attackStatus": {
+         "attackStatus": {
 
-            "scenario": "MITM Attack",
-            "state": "Running",
-            "intercepted": 238,
-            "spoofing": "Enabled",
-            "interface": "eth0"
+        "scenario": "Idle",
+        "state": "Stopped",
+        "intercepted": 0,
+        "spoofing": "Disabled",
+        "interface": "eth0"
 
         },
 
@@ -303,21 +303,15 @@ app_state = {
 
         "terminal": [
 
-            "root@kali:~# python3 mitm.py",
-            "",
-            "[INFO] Initializing attack...",
-            "[INFO] Enabling IP forwarding...",
-            "[SUCCESS] IP forwarding enabled.",
-            "[INFO] Starting ARP spoofing...",
-            "[SUCCESS] Victim ARP cache poisoned.",
-            "[CAPTURE] Packet #231 intercepted",
-            "[CAPTURE] Packet #232 intercepted",
-            "[FORWARD] Forwarding packet to VM2",
-            "[INFO] Monitoring traffic...",
-            "",
-            "root@kali:~# █"
+           "root@kali:~#",
+           "",
+           "[INFO] No active attack.",
+           "[INFO] Waiting for scenario...",
+           "",
+           "root@kali:~# █"
 
         ],
+
 
         "capturedPackets": [
 

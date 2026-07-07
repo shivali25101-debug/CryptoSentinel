@@ -1,81 +1,116 @@
-function TerminalWindow({
-  lines,
-}) {
+import { useEffect, useRef } from "react";
+
+function TerminalWindow({ lines }) {
+  const terminalRef = useRef(null);
+
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop =
+        terminalRef.current.scrollHeight;
+    }
+  }, [lines]);
 
   const getColor = (line) => {
-
-    if (line.includes("[SUCCESS]"))
-      return "text-green-400";
-
     if (line.includes("[ERROR]"))
       return "text-red-400";
 
     if (line.includes("[WARNING]"))
-      return "text-orange-400";
-
-    if (line.includes("[INFO]"))
-      return "text-cyan-400";
-
-    if (
-      line.includes("[TX]") ||
-      line.includes("[RX]")
-    )
       return "text-yellow-400";
 
+    if (line.includes("[OK]"))
+      return "text-green-400";
+
+    if (line.includes("[READY]"))
+      return "text-green-400";
+
+    if (line.includes("[TX]"))
+      return "text-white";
+
+    if (line.includes("[RX]"))
+      return "text-white";
+
+    if (line.includes("[NET]"))
+      return "text-blue-300";
+
+    if (line.includes("[VPN]"))
+      return "text-cyan-300";
+
+    if (line.includes("[INIT]"))
+      return "text-gray-300";
+
     if (line.includes("[OUTPUT]"))
-      return "text-purple-400";
+      return "text-purple-300";
 
-    return "text-green-300";
-
+    return "text-gray-200";
   };
 
   return (
+    <div className="rounded-xl overflow-hidden border border-[#2D2D2D] shadow-xl">
 
-    <div className="bg-[#0F172A] border border-gray-800 rounded-xl overflow-hidden">
+      {/* Ubuntu Header */}
 
-      {/* Header */}
-
-      <div className="bg-[#111827] border-b border-gray-800 px-5 py-3 flex items-center justify-between">
+      <div className="h-10 bg-[#2D2D2D] flex items-center justify-between px-4">
 
         <div className="flex items-center gap-2">
-
-          <span className="w-3 h-3 rounded-full bg-red-500"></span>
-
-          <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-
-          <span className="w-3 h-3 rounded-full bg-green-500"></span>
-
+          <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+          <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+          <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
         </div>
 
-        <span className="text-gray-400 text-sm font-medium">
-          ubuntu@vm2 : Terminal
+        <span className="text-[12px] text-gray-300">
+          ubuntu@vm2:~
         </span>
 
-        <div />
+        <div className="w-12"></div>
 
       </div>
 
       {/* Terminal */}
 
-      <div className="bg-black h-[420px] overflow-y-auto p-6 font-mono text-sm leading-7">
+      <div
+        ref={terminalRef}
+        className="
+          bg-[#300A24]
+          h-[430px]
+          overflow-y-auto
+          px-5
+          py-4
+          font-mono
+          text-[12px]
+          leading-5
+          tracking-tight
+        "
+      >
+
+        <div className="text-[#4CE14C] mb-3">
+          ubuntu@vm2:~$ ./receiver
+        </div>
 
         {lines.map((line, index) => (
-
-          <p
+          <div
             key={index}
-            className={getColor(line)}
+            className={`${getColor(line)} whitespace-pre-wrap`}
           >
             {line}
-          </p>
-
+          </div>
         ))}
+
+        <div className="flex items-center mt-2">
+
+          <span className="text-[#4CE14C]">
+            ubuntu@vm2:~$
+          </span>
+
+          <span className="ml-1 text-white animate-pulse">
+            █
+          </span>
+
+        </div>
 
       </div>
 
     </div>
-
   );
-
 }
 
 export default TerminalWindow;

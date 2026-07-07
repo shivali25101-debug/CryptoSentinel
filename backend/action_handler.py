@@ -24,7 +24,7 @@ def handle_action(action):
         state_manager.update(
             "vm3.attackStatus",
             {
-                "scenario": "Idle",
+                "scenario": "Normal VPN",
                 "state": "Stopped",
                 "intercepted": 0,
                 "spoofing": "Disabled",
@@ -37,8 +37,8 @@ def handle_action(action):
             [
                 "root@kali:~#",
                 "",
-                "[INFO] No attack running.",
-                "[INFO] Network is secure.",
+                "[MONITOR] No attack running.",
+                "[OK] Secure VPN tunnel detected.",
                 "",
                 "root@kali:~# █",
             ],
@@ -68,13 +68,14 @@ def handle_action(action):
         state_manager.update("attackerConnected", False)
 
         state_manager.update(
-            "alerts",
-            [
-                {
-                    "severity": "warning",
-                    "message": "Weak password attack simulation started.",
-                }
-            ],
+            "vm3.attackStatus",
+            {
+                "scenario": "Weak Password Attack",
+                "state": "Running",
+                "intercepted": 0,
+                "spoofing": "Dictionary Attack",
+                "interface": "SSH",
+            },
         )
 
         state_manager.update(
@@ -82,11 +83,21 @@ def handle_action(action):
             [
                 "ubuntu@vm1:~$ login",
                 "",
-                "[INFO] Authenticating...",
+                "[AUTH] Username accepted.",
+                "[AUTH] Password verification...",
                 "[WARNING] Weak password detected.",
-                "[INFO] Sending credentials...",
                 "",
                 "ubuntu@vm1:~$ █",
+            ],
+        )
+
+        state_manager.update(
+            "alerts",
+            [
+                {
+                    "severity": "warning",
+                    "message": "Weak password attack simulation started.",
+                }
             ],
         )
 
@@ -106,7 +117,7 @@ def handle_action(action):
         state_manager.update(
             "vm3.attackStatus",
             {
-                "scenario": "MITM Attack",
+                "scenario": "MITM (Unauthorized)",
                 "state": "Running",
                 "intercepted": 0,
                 "spoofing": "Enabled",
@@ -119,9 +130,9 @@ def handle_action(action):
             [
                 "root@kali:~# python3 mitm.py",
                 "",
-                "[INFO] Starting attack...",
-                "[INFO] ARP Spoofing...",
-                "[SUCCESS] Victim poisoned.",
+                "[MITM] Launching attack...",
+                "[MITM] ARP spoofing started.",
+                "[OK] Victim cache poisoned.",
                 "",
                 "root@kali:~# █",
             ],
@@ -153,11 +164,11 @@ def handle_action(action):
         state_manager.update(
             "vm3.attackStatus",
             {
-                "scenario": "Authorized Inspection",
+                "scenario": "MITM (Authorized)",
                 "state": "Running",
                 "intercepted": 0,
                 "spoofing": "Authorized",
-                "interface": "eth0",
+                "interface": "Inspection Gateway",
             },
         )
 
@@ -187,11 +198,11 @@ def handle_action(action):
         state_manager.update(
             "vm3.attackStatus",
             {
-                "scenario": "Quantum Attack",
+                "scenario": "Shor's Algorithm",
                 "state": "Running",
                 "intercepted": 0,
                 "spoofing": "Quantum",
-                "interface": "Quantum",
+                "interface": "Quantum Cluster",
             },
         )
 
@@ -200,9 +211,9 @@ def handle_action(action):
             [
                 "root@quantum:~# shor_attack",
                 "",
-                "[INFO] Initializing quantum computer...",
-                "[INFO] Factoring ECC key...",
-                "[SUCCESS] Private key recovered.",
+                "[SHOR] Quantum processor initialized.",
+                "[SHOR] Factoring public key...",
+                "[OK] Private key recovered.",
                 "",
                 "root@quantum:~# █",
             ],
@@ -232,13 +243,37 @@ def handle_action(action):
         state_manager.update("attackerConnected", False)
 
         state_manager.update(
-             "vm1.connection.encryption",
-              "CRYSTALS-Kyber-768"
+            "vm1.connection.encryption",
+            "CRYSTALS-Kyber-768",
         )
 
         state_manager.update(
-             "vm1.connection.keyExchange",
-             "Kyber KEM"
+            "vm1.connection.keyExchange",
+            "Kyber KEM",
+        )
+
+        state_manager.update(
+            "vm3.attackStatus",
+            {
+                "scenario": "CRYSTALS-Kyber",
+                "state": "Protected",
+                "intercepted": 0,
+                "spoofing": "Blocked",
+                "interface": "Kyber KEM",
+            },
+        )
+
+        state_manager.update(
+            "vm3.terminal",
+            [
+                "root@quantum:~# monitor.py",
+                "",
+                "[QUANTUM] Launching attack...",
+                "[ERROR] Lattice attack failed.",
+                "[OK] Kyber session remains secure.",
+                "",
+                "root@quantum:~# █",
+            ],
         )
 
         state_manager.update(
@@ -246,7 +281,7 @@ def handle_action(action):
             [
                 {
                     "severity": "success",
-                    "message": "Kyber secure tunnel established.",
+                    "message": "Quantum attack blocked. Kyber session remains secure.",
                 }
             ],
         )

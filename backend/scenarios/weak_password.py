@@ -2,33 +2,68 @@ import random
 from datetime import datetime
 
 PASSWORD_LOGS = [
-    "Loading password dictionary...",
-    "Dictionary loaded (12000 passwords).",
-    "Starting brute-force attack...",
-    "Trying password: admin",
-    "Authentication failed.",
-    "Trying password: password123",
-    "Authentication failed.",
-    "Trying password: qwerty123",
-    "Authentication failed.",
-    "Trying password: letmein123",
-    "Password accepted.",
-    "Login successful.",
-    "Privilege escalation complete.",
+
+    # ---------- Initialization (only once) ----------
+
+    "[INIT] Loading rockyou.txt password dictionary...",
+    "[OK] 14344392 passwords loaded.",
+    "[NET] Connecting to 10.0.0.1:22...",
+    "[OK] SSH service detected.",
+    "[AUTH] Starting brute-force attack...",
+    "[READY] Beginning password attempts...",
+
+    # ---------- Continuous logs ----------
+
+    "[AUTH] Trying password: admin",
+    "[ERROR] Authentication failed.",
+    "[AUTH] Trying password: password",
+    "[ERROR] Authentication failed.",
+    "[AUTH] Trying password: ubuntu",
+    "[ERROR] Authentication failed.",
+    "[AUTH] Trying password: qwerty123",
+    "[ERROR] Authentication failed.",
+    "[AUTH] Trying password: letmein123",
+    "[OK] Password accepted.",
+    "[OK] SSH session established.",
+    "[TX] Downloading user credentials...",
+    "[TX] Enumerating home directory...",
+    "[TX] Reading authorized_keys...",
+    "[TX] Collecting system information...",
+    "[TX] Attempting privilege escalation...",
+    "[TX] Uploading persistence payload...",
+    "[TX] Opening reverse shell...",
+    "[TX] Session active.",
 ]
 
 ATTACKER_LOGS = [
-    "Hydra initialized.",
-    "Connecting to SSH service...",
-    "Username: ubuntu",
-    "Attempting password...",
-    "Access granted.",
-    "Collecting credentials...",
+
+    # ---------- Startup ----------
+
+    "[INIT] hydra -l ubuntu -P rockyou.txt ssh://10.0.0.1",
+    "[OK] Target reachable.",
+    "[READY] Starting password attempts...",
+
+    # ---------- Continuous ----------
+
+    "[TX] Sending authentication request...",
+    "[TX] Waiting for SSH response...",
+    "[ERROR] Login failed.",
+    "[TX] Trying next credential...",
+    "[TX] Sending authentication request...",
+    "[ERROR] Login failed.",
+    "[TX] Trying next credential...",
+    "[OK] Valid credentials discovered.",
+    "[TX] Establishing shell...",
+    "[TX] Reading passwd file...",
+    "[TX] Dumping credentials...",
+    "[TX] Monitoring victim activity...",
+    "[TX] Reverse shell connected.",
 ]
 
 vm1_index = 0
 vm3_index = 0
-
+VM1_INIT_COUNT = 6
+VM3_INIT_COUNT = 3
 
 def append_terminal(state_manager, path, message):
 
@@ -109,21 +144,35 @@ def update(state_manager):
     )
 
     update_packet_monitor(state_manager)
-    append_terminal(
-        state_manager,
-        "vm1.terminal",
-        "[AUTH] " + PASSWORD_LOGS[vm1_index],
-    )
 
-    vm1_index = (vm1_index + 1) % len(PASSWORD_LOGS)
+    if vm1_index < len(PASSWORD_LOGS):
+         append_terminal(
+            state_manager,
+            "vm1.terminal",
+            "[AUTH] " + PASSWORD_LOGS[vm1_index],
+        )
+         vm1_index += 1
+    else:
+        append_terminal(
+           state_manager,
+           "vm1.terminal",
+           "[TX] Sending authentication packet..."
+        )
+    
 
-    append_terminal(
-        state_manager,
-        "vm3.terminal",
-        "[HYDRA] " + ATTACKER_LOGS[vm3_index],
-    )
-
-    vm3_index = (vm3_index + 1) % len(ATTACKER_LOGS)
+    if vm3_index < len(ATTACKER_LOGS):
+        append_terminal(
+           state_manager,
+           "vm3.terminal",
+           "[HYDRA] " + ATTACKER_LOGS[vm3_index],
+        )
+        vm3_index += 1
+    else:
+        append_terminal(
+           state_manager,
+           "vm3.terminal",
+           "[HYDRA] Trying next password..."
+        )
 
     state_manager.update(
         "alerts",

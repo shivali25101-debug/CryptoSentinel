@@ -2,29 +2,56 @@ import random
 from datetime import datetime
 
 VM1_LOGS = [
-    "Initializing CRYSTALS-Kyber...",
-    "Generating Kyber-768 keypair...",
-    "Performing Key Encapsulation...",
-    "Shared secret established.",
-    "Encrypting packet...",
-    "Sending packet...",
+
+    "[INIT] Loading CRYSTALS-Kyber library...",
+    "[INIT] Generating Kyber-768 keypair...",
+    "[OK] Public key generated.",
+    "[NET] Sending public key...",
+    "[OK] Ciphertext received.",
+    "[OK] Shared secret established.",
+
+    "[KYBER] Encrypting application packet...",
+    "[TX] Sending encrypted packet...",
+    "[OK] Packet transmitted.",
+    "[TX] Waiting for acknowledgement...",
+    "[KYBER] Encrypting application packet...",
+    "[TX] Sending encrypted packet...",
+    "[OK] Packet transmitted.",
+    "[TX] Waiting for acknowledgement...",
 ]
 
 VM2_LOGS = [
-    "Receiving Kyber packet...",
-    "Decapsulating shared secret...",
-    "Authentication verified.",
-    "Decrypting packet...",
-    "Payload delivered.",
+
+    "[INIT] Receiver online.",
+    "[OK] Public key received.",
+    "[KYBER] Decapsulating shared secret...",
+    "[OK] Secure session established.",
+
+    "[RX] Encrypted packet received.",
+    "[KYBER] Decrypting packet...",
+    "[OK] Payload verified.",
+    "[OK] Payload delivered.",
+    "[RX] Waiting for next packet...",
+    "[RX] Encrypted packet received.",
+    "[KYBER] Decrypting packet...",
+    "[OK] Payload delivered.",
 ]
 
 VM3_LOGS = [
-    "Launching quantum attack...",
-    "Searching for private key...",
-    "Attempting lattice reduction...",
-    "Attack failed.",
-    "Kyber KEM resisted attack.",
-    "Monitoring secure traffic...",
+
+    "[INIT] Quantum cluster initialized...",
+    "[QUANTUM] Capturing Kyber public key...",
+    "[QUANTUM] Running lattice reduction...",
+    "[QUANTUM] Searching secret vector...",
+    "[ERROR] Attack failed.",
+    "[OK] Kyber KEM resisted attack.",
+
+    "[QUANTUM] Monitoring encrypted traffic...",
+    "[QUANTUM] Retrying lattice attack...",
+    "[ERROR] No private key recovered.",
+    "[QUANTUM] Monitoring encrypted traffic...",
+    "[QUANTUM] Retrying lattice attack...",
+    "[ERROR] Attack failed.",
 ]
 
 vm1_index = 0
@@ -64,7 +91,7 @@ def update_packet_monitor(state_manager):
 
         "encrypted": "Yes",
 
-        "status": "Encrypted",
+        "status": "Quantum Safe",
 
         "timestamp": datetime.now().strftime("%H:%M:%S"),
 
@@ -180,7 +207,7 @@ def update(state_manager):
         [
             {
                 "severity": "success",
-                "message": "Kyber resisted quantum attack.",
+                "message": "Quantum attack blocked. CRYSTALS-Kyber session remains secure.",
             }
         ],
     )

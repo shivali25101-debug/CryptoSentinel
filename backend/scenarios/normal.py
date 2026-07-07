@@ -5,35 +5,81 @@ from datetime import datetime
 # Scenario Sequences
 # ===========================
 
-VM1_LOGS = [
-    "Generating X25519 key pair...",
-    "Public key generated.",
-    "Sending public key to VM2...",
-    "Waiting for receiver response...",
-    "Receiver public key received.",
-    "Shared secret generated.",
-    "Deriving ChaCha20-Poly1305 session key...",
-    "VPN tunnel established.",
-    "Encrypting packet...",
-    "Packet transmitted."
+VM1_STARTUP = [
+
+    "=========================================================",
+    " CryptoBreak Module 2B - Authenticated Key Exchange",
+    "=========================================================",
+    "",
+    "[INIT] Loading VPN sender...",
+    "[INIT] Generating X25519 keypair...",
+    "[OK] Local public key generated.",
+    "[NET] Sending public key to VM2...",
+    "[NET] Waiting for remote public key...",
+    "[OK] Remote public key received.",
+    "[OK] Shared secret established.",
+    "[OK] ChaCha20-Poly1305 session created.",
+    "[VPN] Secure tunnel established.",
+    "",
+    "[READY] Beginning encrypted transmission."
+
 ]
 
-VM2_LOGS = [
-    "Incoming encrypted packet...",
-    "Authenticating sender...",
-    "Certificate verified.",
-    "Shared secret confirmed.",
-    "Decrypting packet...",
-    "Integrity verified.",
-    "Displaying payload...",
-    "Waiting for next packet..."
+VM1_RUNTIME = [
+
+    "[TX] Packet encrypted successfully.",
+    "[TX] Sending encrypted UDP packet...",
+    "[OK] Packet delivered to VPN tunnel.",
+    "[TX] Packet encrypted successfully.",
+    "[TX] Sending encrypted UDP packet...",
+    "[OK] Packet delivered to VPN tunnel.",
+
 ]
 
-VM3_LOGS = [
-    "Monitoring traffic...",
-    "No suspicious activity.",
-    "Tunnel healthy.",
-    "Idle..."
+VM2_STARTUP = [
+
+    "=========================================================",
+    " CryptoBreak Module 2B - Receiver",
+    "=========================================================",
+    "",
+    "[INIT] Receiver starting...",
+    "[NET] Waiting for sender...",
+    "[NET] Public key received.",
+    "[OK] Shared secret generated.",
+    "[VPN] Secure tunnel active.",
+    "[READY] Waiting for packets."
+
+]
+
+VM2_RUNTIME = [
+
+    "[RX] Encrypted packet received.",
+    "[OK] Authentication successful.",
+    "[OK] Integrity verified.",
+    "[RX] Decrypting packet...",
+    "[OK] Payload delivered.",
+
+]
+
+VM3_STARTUP = [
+
+    "=========================================================",
+    " Passive Monitor",
+    "=========================================================",
+    "",
+    "[INIT] Starting network monitor...",
+    "[OK] Monitoring interface eth0.",
+    "[READY] Waiting for traffic."
+
+]
+
+VM3_RUNTIME = [
+
+    "[MONITOR] Tunnel healthy.",
+    "[MONITOR] Secure packet observed.",
+    "[MONITOR] No suspicious activity.",
+    "[MONITOR] Monitoring traffic.",
+
 ]
 
 FLOW_EVENTS = [
@@ -53,6 +99,14 @@ PACKET_ROUTE = [
 vm1_index = 0
 vm2_index = 0
 vm3_index = 0
+
+vm1_started = False
+vm2_started = False
+vm3_started = False
+
+vm1_runtime = 0
+vm2_runtime = 0
+vm3_runtime = 0
 flow_index = 0
 packet_index = 0
 
@@ -63,8 +117,8 @@ def append_terminal(state_manager, path, message):
 
     terminal.insert(-1, message)
 
-    if len(terminal) > 25:
-        terminal = terminal[-25:]
+    if len(terminal) > 100:
+        terminal = terminal[-100:]
 
     state_manager.update(path, terminal)
 
@@ -217,17 +271,42 @@ def update(state_manager):
         state_manager.get("bytesTransferred")
         + random.randint(1500, 3500),
     )
-        # =====================
+           # =====================
     # VM1
     # =====================
 
-    append_terminal(
-        state_manager,
-        "vm1.terminal",
-        "[INFO] " + VM1_LOGS[vm1_index],
-    )
+    global vm1_started
+    global vm2_started
+    global vm3_started
 
-    vm1_index = (vm1_index + 1) % len(VM1_LOGS)
+    global vm1_runtime
+    global vm2_runtime
+    global vm3_runtime
+
+    if not vm1_started:
+
+        append_terminal(
+            state_manager,
+            "vm1.terminal",
+            VM1_STARTUP[vm1_index],
+        )
+
+        vm1_index += 1
+
+        if vm1_index >= len(VM1_STARTUP):
+            vm1_started = True
+
+    else:
+
+        append_terminal(
+            state_manager,
+            "vm1.terminal",
+            VM1_RUNTIME[vm1_runtime],
+        )
+
+        vm1_runtime = (
+            vm1_runtime + 1
+        ) % len(VM1_RUNTIME)
 
     update_queue(state_manager)
 
@@ -235,13 +314,30 @@ def update(state_manager):
     # VM2
     # =====================
 
-    append_terminal(
-        state_manager,
-        "vm2.terminal",
-        "[INFO] " + VM2_LOGS[vm2_index],
-    )
+    if not vm2_started:
 
-    vm2_index = (vm2_index + 1) % len(VM2_LOGS)
+        append_terminal(
+            state_manager,
+            "vm2.terminal",
+            VM2_STARTUP[vm2_index],
+        )
+
+        vm2_index += 1
+
+        if vm2_index >= len(VM2_STARTUP):
+            vm2_started = True
+
+    else:
+
+        append_terminal(
+            state_manager,
+            "vm2.terminal",
+            VM2_RUNTIME[vm2_runtime],
+        )
+
+        vm2_runtime = (
+            vm2_runtime + 1
+        ) % len(VM2_RUNTIME)
 
     update_receiver(state_manager)
 
@@ -249,13 +345,30 @@ def update(state_manager):
     # VM3
     # =====================
 
-    append_terminal(
-        state_manager,
-        "vm3.terminal",
-        "[INFO] " + VM3_LOGS[vm3_index],
-    )
+    if not vm3_started:
 
-    vm3_index = (vm3_index + 1) % len(VM3_LOGS)
+        append_terminal(
+            state_manager,
+            "vm3.terminal",
+            VM3_STARTUP[vm3_index],
+        )
+
+        vm3_index += 1
+
+        if vm3_index >= len(VM3_STARTUP):
+            vm3_started = True
+
+    else:
+
+        append_terminal(
+            state_manager,
+            "vm3.terminal",
+            VM3_RUNTIME[vm3_runtime],
+        )
+
+        vm3_runtime = (
+            vm3_runtime + 1
+        ) % len(VM3_RUNTIME)
 
     # =====================
     # Alerts

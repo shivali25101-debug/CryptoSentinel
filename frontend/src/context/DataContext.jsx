@@ -17,7 +17,22 @@ export function DataProvider({ children }) {
 
     ws.onmessage = (event) => {
       const newData = JSON.parse(event.data);
-      console.log("VM3 =", newData.vm3);
+
+      console.log("====================================");
+      console.log("Current Scenario:", newData.scenario);
+
+      console.log(
+        "Attack Status:",
+        JSON.stringify(newData.vm3.attackStatus, null, 2)
+      );
+
+      console.log(
+        "Terminal First Line:",
+        newData.vm3.terminal[0]
+      );
+
+      console.log("====================================");
+
       setData(newData);
     };
 

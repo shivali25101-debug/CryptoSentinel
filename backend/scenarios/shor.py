@@ -2,24 +2,56 @@ import random
 from datetime import datetime
 
 VM1_LOGS = [
-    "Generating X25519 key pair...",
-    "Sending public key...",
-    "Waiting for receiver...",
+
+    "[INIT] Loading X25519 module...",
+    "[INIT] Generating ephemeral key pair...",
+    "[OK] Public key generated.",
+    "[NET] Sending public key to receiver...",
+    "[OK] Shared secret established.",
+    "[VPN] ChaCha20 session initialized.",
+
+    "[TX] Encrypting application packet...",
+    "[TX] Sending encrypted packet...",
+    "[TX] Packet transmitted successfully.",
+    "[TX] Waiting for acknowledgement...",
+    "[TX] Encrypting application packet...",
+    "[TX] Sending encrypted packet...",
+    "[TX] Packet transmitted successfully.",
+    "[TX] Waiting for acknowledgement...",
 ]
 
 VM2_LOGS = [
-    "Receiving encrypted packet...",
-    "Awaiting secure key...",
-    "Decrypting message...",
+
+    "[INIT] Receiver online.",
+    "[OK] Public key received.",
+    "[OK] Shared secret derived.",
+    "[VPN] Secure session active.",
+
+    "[RX] Encrypted packet received.",
+    "[RX] Authenticating packet...",
+    "[RX] Decrypting payload...",
+    "[OK] Payload delivered.",
+    "[RX] Waiting for next packet...",
+    "[RX] Encrypted packet received.",
+    "[RX] Decrypting payload...",
+    "[OK] Payload delivered.",
 ]
 
 VM3_LOGS = [
-    "Initializing quantum computer...",
-    "Running Shor's algorithm...",
-    "Factoring public key...",
-    "Private key recovered.",
-    "Decrypting intercepted packet...",
-    "Reading plaintext...",
+
+    "[INIT] Quantum processing cluster online...",
+    "[SHOR] Capturing public key...",
+    "[SHOR] Running Shor's Algorithm...",
+    "[SHOR] Period finding complete.",
+    "[SHOR] Recovering private key...",
+    "[OK] Private key recovered.",
+
+    "[SHOR] Decrypting intercepted packet...",
+    "[OK] Plaintext extracted.",
+    "[SHOR] Monitoring encrypted traffic...",
+    "[SHOR] Decrypting intercepted packet...",
+    "[OK] Plaintext extracted.",
+    "[SHOR] Monitoring encrypted traffic...",
 ]
 
 vm1_index = 0
@@ -59,7 +91,7 @@ def update_packet_monitor(state_manager):
 
         "encrypted": "No",
 
-        "status": "Intercepted",
+        "status": "Quantum Decrypted",
 
         "timestamp": datetime.now().strftime("%H:%M:%S"),
 
