@@ -1,3 +1,4 @@
+import { useData } from "../../context/DataContext";
 import {
   Shield,
   ShieldCheck,
@@ -8,6 +9,7 @@ import useCyberData from "../../hooks/useCyberData";
 
 function ScenarioCard() {
   const { scenario, vpnStatus } = useCyberData();
+  const { socket } = useData();
 
   const scenarios = {
     "Normal VPN": {

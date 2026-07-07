@@ -13,7 +13,7 @@ import {
 function ScenarioCard({
   scenario,
   selectedScenario,
-  setSelectedScenario,
+  onSelect,
 }) {
   const [flip, setFlip] = useState(false);
 
@@ -53,15 +53,12 @@ function ScenarioCard({
     audioRef.current.play().catch(() => {});
   };
 
+  
   const handleClick = () => {
-    playClick();
+  playClick();
 
-    setSelectedScenario(scenario.id);
-
-    setTimeout(() => {
-      navigate("/visualization");
-    }, 700);
-  };
+  onSelect(scenario);
+};
 
   return (
     <div

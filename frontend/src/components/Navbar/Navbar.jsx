@@ -14,15 +14,10 @@ function Navbar() {
       <div>
 
         <h1 className="text-2xl font-semibold tracking-wide">
-          Dashboard
+          
         </h1>
 
-        <p className="text-sm text-gray-400 mt-1">
-          Current Scenario :
-          <span className="text-green-400 ml-2">
-            Normal VPN
-          </span>
-        </p>
+        
 
       </div>
 

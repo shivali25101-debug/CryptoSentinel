@@ -4,23 +4,26 @@ app_state = {
     # Current Scenario
     # ---------------------------------
 
-    "scenario": "Normal",
+    "scenario": "normal",
 
     # VPN
 
-    "vpnStatus": "Disconnected",
+    "vpnStatus": "Connected",
 
     # Connection Status
 
-    "senderConnected": False,
-    "receiverConnected": False,
-    "attackerConnected": False,
-
+    "senderConnected": True,
+"receiverConnected": True,
+"attackerConnected": True,
     "simulation": {
     "packet": {
         "id": 1,
         "position": "vm1",
-        "status": "encrypted"
+        "status": "encrypting",
+        "source": "vm1",
+        "destination": "vm2",
+        "protocol": "UDP",
+        "color": "cyan"
     }
 },
 
@@ -50,6 +53,10 @@ app_state = {
     # Alerts
 
     "alerts": [],
+
+    "trafficFlow": [],
+
+"timeline": [],
 
     # =====================================================
     # VM1
@@ -259,14 +266,7 @@ app_state = {
             }
 
         ],
-        "simulation": {
-    "packet": {
-        "id": 0,
-        "position": "vm1",
-        "status": "idle",
-        "color": "cyan",
-    }
-},
+       
 
     }
 

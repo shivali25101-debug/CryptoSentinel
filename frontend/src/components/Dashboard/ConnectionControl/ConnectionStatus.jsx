@@ -30,10 +30,7 @@ function ConnectionStatus() {
         {text}
       </h2>
 
-      <p className="text-gray-400 text-[13px] mt-2">
-        Current Scenario: <span className="text-cyan-400">{scenario}</span>
-      </p>
-
+      
     </div>
   );
 }
