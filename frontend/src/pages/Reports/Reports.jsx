@@ -1,110 +1,79 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import CyberHeading from "../../components/CyberHeading";
 import ReportStats from "../../components/Reports/ReportStats";
 import CurrentReport from "../../components/Reports/CurrentReport";
 import ReportHistory from "../../components/Reports/ReportHistory";
-
-const latestReport = {
-  scenario: "MITM Attack",
-  started: "04 Jul 2026, 10:42 AM",
-  duration: "05m 32s",
-  encryption: "ChaCha20-Poly1305",
-  keyExchange: "X25519",
-  vpn: "Active",
-  threat: "HIGH",
-  sent: 1425,
-  intercepted: 238,
-  dropped: 18,
-  forwarded: 1169,
-  bytes: "18.6 MB",
-};
-
-const reportHistory = [
-  {
-    id: 1,
-    scenario: "MITM Attack",
-    date: "04 Jul 2026",
-    threat: "HIGH",
-  },
-  {
-    id: 2,
-    scenario: "Replay Attack",
-    date: "03 Jul 2026",
-    threat: "MEDIUM",
-  },
-  {
-    id: 3,
-    scenario: "ARP Spoofing",
-    date: "03 Jul 2026",
-    threat: "HIGH",
-  },
-  {
-    id: 4,
-    scenario: "Secure VPN",
-    date: "02 Jul 2026",
-    threat: "LOW",
-  },
-  {
-    id: 5,
-    scenario: "Weak Password",
-    date: "02 Jul 2026",
-    threat: "MEDIUM",
-  },
-];
+import { useData } from "../../context/DataContext";
 
 function Reports() {
+  const { data } = useData();
 
-  const [currentReport, setCurrentReport] =
-    useState(latestReport);
+  const [currentReport, setCurrentReport] = useState(null);
+  const [reports, setReports] = useState([]);
 
-  const [reports, setReports] =
-    useState(reportHistory);
+  useEffect(() => {
+    if (!data) return;
 
-  /*
-    BACKEND LATER
+    let threat = "LOW";
 
-    useEffect(() => {
-      fetch("http://localhost:5000/api/reports")
-        .then(res => res.json())
-        .then(data => {
-          setCurrentReport(data.latest);
-          setReports(data.history);
-        });
-    }, []);
+    if (data.scenario === "MITM") threat = "HIGH";
+    else if (data.scenario === "Weak Password") threat = "MEDIUM";
+    else if (data.scenario === "Shor") threat = "HIGH";
+    else if (data.scenario === "Kyber") threat = "LOW";
+    else if (data.scenario === "MITM_AUTH") threat = "LOW";
 
-  */
+    const report = {
+      scenario: data.scenario,
+      started: new Date().toLocaleString(),
+      duration: data.uptime,
+      encryption: data.vm1.connection.encryption,
+      keyExchange: data.vm1.connection.keyExchange,
+      vpn: data.vpnStatus,
+      threat,
+
+      sent: data.sentPackets,
+      intercepted: data.interceptedPackets,
+      dropped: data.droppedPackets,
+      forwarded: data.forwardedPackets,
+
+      bytes:
+        (data.bytesTransferred / 1024 / 1024).toFixed(2) +
+        " MB",
+    };
+
+    setCurrentReport(report);
+
+    setReports([
+      {
+        id: 1,
+        scenario: report.scenario,
+        date: new Date().toLocaleDateString(),
+        threat: report.threat,
+      },
+    ]);
+  }, [data]);
+
+  if (!currentReport) return null;
 
   return (
-
     <div className="min-h-screen px-8 py-0">
-
       <CyberHeading
         title="SIMULATION REPORTS"
         subtitle="GENERATED ANALYSIS OF SECURITY SIMULATIONS"
       />
 
       <div className="space-y-6 mt-8">
-
         <ReportStats
           reports={reports}
           currentReport={currentReport}
         />
 
-        <CurrentReport
-          report={currentReport}
-        />
+        <CurrentReport report={currentReport} />
 
-        <ReportHistory
-          reports={reports}
-        />
-
+        <ReportHistory reports={reports} />
       </div>
-
     </div>
-
   );
-
 }
 
 export default Reports;

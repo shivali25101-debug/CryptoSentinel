@@ -82,7 +82,7 @@ function TrafficFlow() {
         };
         break;
 
-      case "Kyber Encryption":
+      case "Kyber Secure":
 
         log = {
           time,

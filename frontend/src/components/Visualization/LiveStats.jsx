@@ -18,12 +18,12 @@ function LiveStats() {
   let encrypted = "0%";
 
   if (
-    scenario === "Normal VPN"
+    scenario === "Normal"
   )
     encrypted = "100%";
 
   else if (
-    scenario === "Kyber Encryption"
+    scenario === "Kyber Secure"
   )
     encrypted = "PQC";
 

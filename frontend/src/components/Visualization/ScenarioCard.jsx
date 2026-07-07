@@ -1,4 +1,3 @@
-import { useData } from "../../context/DataContext";
 import {
   Shield,
   ShieldCheck,
@@ -9,10 +8,11 @@ import useCyberData from "../../hooks/useCyberData";
 
 function ScenarioCard() {
   const { scenario, vpnStatus } = useCyberData();
-  const { socket } = useData();
+
+  console.log("Scenario from backend:", scenario);
 
   const scenarios = {
-    "Normal VPN": {
+    normal: {
       title: "Normal VPN",
       description:
         "Secure encrypted communication between VM1 and VM2.",
@@ -22,37 +22,7 @@ function ScenarioCard() {
       Icon: Shield,
     },
 
-    "MITM Authorized": {
-      title: "MITM (Authorized)",
-      description:
-        "Traffic interception performed for educational simulation.",
-      color: "text-yellow-400",
-      bg: "bg-yellow-500/10",
-      border: "border-yellow-500/30",
-      Icon: ShieldAlert,
-    },
-
-    "MITM Unauthorized": {
-      title: "MITM (Unauthorized)",
-      description:
-        "Unauthorized attacker is intercepting packets.",
-      color: "text-red-400",
-      bg: "bg-red-500/10",
-      border: "border-red-500/30",
-      Icon: ShieldAlert,
-    },
-
-    "Replay Attack": {
-      title: "Replay Attack",
-      description:
-        "Captured packets are being retransmitted.",
-      color: "text-orange-400",
-      bg: "bg-orange-500/10",
-      border: "border-orange-500/30",
-      Icon: ShieldAlert,
-    },
-
-    "Weak Password": {
+    weak_password: {
       title: "Weak Password",
       description:
         "Credential attack simulation running.",
@@ -62,8 +32,38 @@ function ScenarioCard() {
       Icon: ShieldAlert,
     },
 
-    "Shor Algorithm": {
-      title: "Shor Quantum Attack",
+    mitm_authorized: {
+      title: "MITM (Authorized)",
+      description:
+        "Traffic interception performed for educational simulation.",
+      color: "text-yellow-400",
+      bg: "bg-yellow-500/10",
+      border: "border-yellow-500/30",
+      Icon: ShieldAlert,
+    },
+
+    mitm_unauthorized: {
+      title: "MITM (Unauthorized)",
+      description:
+        "Unauthorized attacker is intercepting packets.",
+      color: "text-red-400",
+      bg: "bg-red-500/10",
+      border: "border-red-500/30",
+      Icon: ShieldAlert,
+    },
+
+    replay: {
+      title: "Replay Attack",
+      description:
+        "Captured packets are being retransmitted.",
+      color: "text-orange-400",
+      bg: "bg-orange-500/10",
+      border: "border-orange-500/30",
+      Icon: ShieldAlert,
+    },
+
+    shor: {
+      title: "Shor Algorithm",
       description:
         "Quantum attack against classical cryptography.",
       color: "text-violet-400",
@@ -72,7 +72,7 @@ function ScenarioCard() {
       Icon: ShieldAlert,
     },
 
-    "Kyber Encryption": {
+    kyber: {
       title: "Kyber Encryption",
       description:
         "Post-Quantum VPN tunnel is active.",
@@ -83,8 +83,11 @@ function ScenarioCard() {
     },
   };
 
-  const current =
-    scenarios[scenario] || scenarios["Normal VPN"];
+  const key = (scenario || "normal")
+    .trim()
+    .toLowerCase();
+
+  const current = scenarios[key] || scenarios.normal;
 
   const Icon = current.Icon;
 
@@ -92,7 +95,6 @@ function ScenarioCard() {
     <div className="bg-[#0F172A] border border-slate-800 rounded-xl px-5 py-4 h-28 flex items-center justify-between">
 
       <div>
-
         <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
           Current Scenario
         </p>
@@ -119,7 +121,6 @@ function ScenarioCard() {
             {vpnStatus}
           </span>
         </p>
-
       </div>
 
       <div

@@ -58,6 +58,7 @@ packet_index = 0
 
 
 def append_terminal(state_manager, path, message):
+
     terminal = state_manager.get(path)
 
     terminal.insert(-1, message)
@@ -121,6 +122,7 @@ def update_receiver(state_manager):
 
 
 def update_packet(state_manager):
+
     global packet_index
 
     packet = state_manager.get("simulation.packet")
@@ -139,6 +141,35 @@ def update_packet(state_manager):
     )
 
 
+def update_packet_monitor(state_manager):
+
+    packets = state_manager.get("packets")
+
+    packet = state_manager.get("simulation.packet")
+
+    packets.append(
+        {
+            "id": packet["id"],
+            "protocol": random.choice(["TCP", "UDP"]),
+            "source": "VM1",
+            "destination": "VM2",
+            "size": f"{random.randint(64,512)} Bytes",
+            "encrypted": "Yes",
+            "status": "Encrypted",
+            "timestamp": datetime.now().strftime("%H:%M:%S"),
+            "payload": " ".join(
+                "".join(random.choice("0123456789ABCDEF") for _ in range(2))
+                for _ in range(32)
+            ),
+        }
+    )
+
+    if len(packets) > 100:
+        packets = packets[-100:]
+
+    state_manager.update("packets", packets)
+
+
 def update(state_manager):
 
     global vm1_index
@@ -151,6 +182,7 @@ def update(state_manager):
     # =====================
 
     update_packet(state_manager)
+    update_packet_monitor(state_manager)
 
     # =====================
     # Statistics
@@ -185,8 +217,7 @@ def update(state_manager):
         state_manager.get("bytesTransferred")
         + random.randint(1500, 3500),
     )
-
-    # =====================
+        # =====================
     # VM1
     # =====================
 
@@ -262,8 +293,7 @@ def update(state_manager):
         "trafficFlow",
         flow,
     )
-
-    # =====================
+        # =====================
     # Timeline
     # =====================
 

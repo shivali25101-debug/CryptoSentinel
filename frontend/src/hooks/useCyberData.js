@@ -26,6 +26,7 @@ export default function useCyberData() {
     uptime: data?.uptime ?? "00:00:00",
 
     alerts: data?.alerts ?? [],
+    packets: data?.packets ?? [],
 
     senderConnected: data?.senderConnected ?? false,
     receiverConnected: data?.receiverConnected ?? false,

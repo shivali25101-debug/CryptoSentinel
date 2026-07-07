@@ -227,18 +227,14 @@ function NetworkCanvas() {
           </p>
 
           <p
-            className={`absolute w-5 h-5 rounded-full z-30 shadow-lg ${
-  packet.status === "captured"
-    ? "bg-red-500"
-    : packet.status === "forwarded"
-    ? "bg-yellow-400"
-    : packet.status === "replayed"
-    ? "bg-purple-500"
-    : "bg-cyan-400"
-}`}
-          >
-            {vpnStatus}
-          </p>
+  className={
+    vpnStatus === "Connected"
+      ? "text-green-400"
+      : "text-red-400"
+  }
+>
+  {vpnStatus}
+</p>
 
         </div>
 

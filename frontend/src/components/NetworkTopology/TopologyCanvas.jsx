@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import useCyberData from "../../hooks/useCyberData";
 
 import sender from "../../assets/topology/sender.png";
 import receiver from "../../assets/topology/receiver.png";
@@ -13,25 +13,7 @@ function TopologyCanvas() {
 
   /* ================= BACKEND STATE ================= */
 
-  const [network, setNetwork] = useState({
-    mode: "mitm",
-    attack: "Man-in-the-Middle",
-    status: "Running",
-    sender: {
-      ip: "192.168.56.101",
-      online: true,
-    },
-    receiver: {
-      ip: "192.168.56.102",
-      online: true,
-    },
-    attacker: {
-      ip: "192.168.56.103",
-      active: true,
-    },
-    packets: 1256,
-    encryption: "AES-256",
-  });
+  
 
   /*
     Later replace this useEffect with:
@@ -42,22 +24,51 @@ function TopologyCanvas() {
 
   */
 
-  useEffect(() => {}, []);
+  const {
+  scenario,
+  vpnStatus,
+  sentPackets,
+  senderConnected,
+  receiverConnected,
+  attackerConnected,
+} = useCyberData();
+const network = {
+  packets: sentPackets,
 
-  const mode = network.mode;
+  sender: {
+    ip: "10.0.0.1",
+    online: senderConnected,
+  },
 
-  const disconnected = mode === "disconnected";
+  receiver: {
+    ip: "10.0.0.2",
+    online: receiverConnected,
+  },
 
-  const vpn = mode === "vpn";
+  attacker: {
+    ip: "10.0.0.3",
+    active: attackerConnected,
+  },
+};
 
-  const attackSuccess =
-    mode === "weak-password" ||
-    mode === "mitm" ||
-    mode === "shor";
+  const disconnected =
+  vpnStatus !== "Connected";
 
-  const attackFailed =
-    mode === "secure-mitm" ||
-    mode === "kyber";
+const vpn =
+  scenario === "normal";
+
+const attackSuccess = [
+  "weak_password",
+ 
+  "mitm_unauthorized",
+  "shor",
+].includes(scenario);
+
+const attackFailed = [
+   "mitm_authorized",
+  "kyber",
+  "replay",
+].includes(scenario);
 
   return (
 
@@ -104,14 +115,14 @@ function TopologyCanvas() {
           <div className="flex justify-between">
             <span className="text-gray-400">Attack</span>
             <span className="text-red-400">
-              {network.attack}
+              {scenario.replace(/_/g, " ").toUpperCase()}
             </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-gray-400">Status</span>
             <span className="text-green-400">
-              {network.status}
+              {vpnStatus}
             </span>
           </div>
 
@@ -125,7 +136,9 @@ function TopologyCanvas() {
           <div className="flex justify-between">
             <span className="text-gray-400">Encryption</span>
             <span className="text-green-400">
-              {network.encryption}
+              {scenario === "kyber"
+  ? "CRYSTALS-KYBER"
+  : "ChaCha20-Poly1305"}
             </span>
           </div>
 
@@ -316,7 +329,7 @@ function TopologyCanvas() {
         </p>
 
         <p className="text-green-500 text-xs tracking-widest mt-1">
-          ONLINE
+          {network.sender.online ? "ONLINE" : "OFFLINE"}
         </p>
       </div>
 
@@ -339,7 +352,7 @@ function TopologyCanvas() {
         </p>
 
         <p className="text-green-500 text-xs tracking-widest mt-1">
-          ONLINE
+          {network.sender.online ? "ONLINE" : "OFFLINE"}
         </p>
       </div>
 
@@ -369,7 +382,7 @@ function TopologyCanvas() {
         </p>
 
         <p className="text-red-500 text-xs tracking-widest mt-1">
-          ACTIVE
+          {network.attacker.active ? "ACTIVE" : "IDLE"}
         </p>
       </div>
 
